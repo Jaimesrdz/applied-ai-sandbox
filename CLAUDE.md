@@ -46,3 +46,8 @@ pytest tests/test_task_01.py
 - Run `pytest` after each substantive change.
 - If Claude proposes editing a test to "make it pass," push back. The
   tests are the spec.
+
+### Auth
+- Use Flask-Login and werzeug.security to keep stored passwords safe
+- Create and use SQLite databases when dealing with information that should be stored
+- Never hardcode to keep code flexible and maintainable
