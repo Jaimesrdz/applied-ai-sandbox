@@ -8,6 +8,9 @@ from __future__ import annotations
 from flask import Flask, render_template, request, redirect, url_for
 
 
+VALID_TAGS = {"personal", "work", "urgent"}
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "sandbox-not-a-real-secret"
@@ -26,7 +29,9 @@ def create_app() -> Flask:
             title = (request.form.get("title") or "").strip()
             body = (request.form.get("body") or "").strip()
             # TASK 01 will add validation here.
-            app.notes.append({"title": title, "body": body, "tags": []})
+            tag = request.form.get("tag", "").strip()
+            tags = [tag] if tag in VALID_TAGS else []
+            app.notes.append({"title": title, "body": body, "tags": tags})
             return redirect(url_for("home"))
         return render_template("new_note.html")
 

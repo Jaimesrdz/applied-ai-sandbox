@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_task_01.py tests/test_task_02.py -v)"
+    ]
+  }
+}
