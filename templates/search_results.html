@@ -14,6 +14,14 @@
 </head>
 <body>
   <h1>Search results</h1>
+  <form action="{{ url_for('search') }}" method="GET" style="margin-bottom:1.5rem;">
+    <input type="search" name="q" value="{{ query }}" placeholder="Search notes…"
+           style="padding:0.5rem;border:1px solid #ccc;border-radius:6px;font:inherit;width:70%;">
+    <button type="submit"
+            style="background:#1a2540;color:#fff;padding:0.5rem 1rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;margin-left:0.5rem;">
+      Search
+    </button>
+  </form>
   {% if truncated %}
     <p style="color:#b00020;">Your query was longer than 200 characters and has been trimmed.</p>
   {% endif %}
