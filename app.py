@@ -28,7 +28,7 @@ def _make_highlight(text: str, query: str) -> Markup:
     return Markup("".join(result))
 
 
-def _make_snippet(body: str, query: str, max_len: int = 150) -> str:
+def _trim_body(body: str, query: str, max_len: int = 150) -> str:
     """Return a short excerpt of body centered on the first match."""
     if not body:
         return ""
@@ -93,7 +93,7 @@ def create_app() -> Flask:
             in_body = q_lower in body[:10000].lower()
             if not (in_title or in_body):
                 continue
-            snippet = _make_snippet(body, q)
+            snippet = _trim_body(body, q)
             result = {
                 "title": title or "Untitled",
                 "highlighted_title": _make_highlight(title or "Untitled", q),
@@ -101,7 +101,10 @@ def create_app() -> Flask:
                 "in_title": in_title,
                 "in_body": in_body,
             }
-            (title_matches if in_title else body_matches).append(result)
+            if in_title:
+                title_matches.append(result)
+            else:
+                body_matches.append(result)
 
         return render_template(
             "search_results.html",
