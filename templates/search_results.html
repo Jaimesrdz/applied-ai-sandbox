@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search · Sandbox</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    .note { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+    .note h3 { margin: 0 0 0.5rem; }
+    .label { font-size: 0.8rem; color: #666; margin-bottom: 0.25rem; }
+    mark { background: #fff176; }
+    a.btn { display: inline-block; background: #1a2540; color: #fff; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>Search results</h1>
+  {% if truncated %}
+    <p style="color:#b00020;">Your query was longer than 200 characters and has been trimmed.</p>
+  {% endif %}
+  <p>Results for <strong>"{{ query }}"</strong>: {{ results|length }} found</p>
+  <a class="btn" href="{{ url_for('home') }}">&larr; All notes</a>
+
+  <div style="margin-top:1.5rem;">
+  {% if results %}
+    {% for r in results %}
+      <div class="note">
+        <h3>{{ r.highlighted_title }}</h3>
+        {% if r.highlighted_snippet %}
+          <p class="label">{% if not r.in_title %}Match in body:{% endif %}</p>
+          <p>{{ r.highlighted_snippet }}</p>
+        {% else %}
+          <p style="color:#999;">No body.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Nothing matched — try a different search or <a href="{{ url_for('new_note') }}">create a new note</a>.</p>
+  {% endif %}
+  </div>
+</body>
+</html>
