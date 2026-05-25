@@ -11,6 +11,8 @@ from markupsafe import Markup, escape
 
 def _make_highlight(text: str, query: str) -> Markup:
     """Escape text, then wrap case-insensitive query matches in <mark>."""
+    if not query:
+        return Markup(escape(text))
     escaped_text = str(escape(text))
     escaped_query = str(escape(query))
     result, i = [], 0
