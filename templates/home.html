@@ -16,6 +16,23 @@
   <h1>Sandbox Notes</h1>
   <p class="meta">A tiny note-taking app. Practice ground for the Applied AI cohort.</p>
 
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <p style="color:#b00020;">{{ msg }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('search') }}" method="GET" style="margin-bottom:1.5rem;">
+    <input type="search" name="q" placeholder="Search notes…"
+           style="padding:0.5rem;border:1px solid #ccc;border-radius:6px;font:inherit;width:70%;">
+    <button type="submit"
+            style="background:#1a2540;color:#fff;padding:0.5rem 1rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;margin-left:0.5rem;">
+      Search
+    </button>
+  </form>
+
   <a class="btn" href="{{ url_for('new_note') }}">+ New note</a>
 
   <h2 style="margin-top: 2rem;">Your notes ({{ notes|length }})</h2>
